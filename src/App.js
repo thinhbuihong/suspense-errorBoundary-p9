@@ -1,25 +1,16 @@
-import logo from './logo.svg';
-import './App.css';
-
-function App() {
+import React, { useState, lazy, Suspense } from "react";
+import Agreement from "./Agreement";
+import ClimbingBoxLoader from "react-spinners/ClimbingBoxLoader";
+// import Main from "./Main";
+const Main = React.lazy(() => import("./Main"));
+// import "./SiteLayout.css";
+export default function App() {
+  const [agree, setAgree] = useState(false);
+  if (!agree)
+    return <Agreement onAgree={() => setAgree(true)} />;
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Suspense fallback={<ClimbingBoxLoader />}>
+      <Main />
+    </Suspense>
   );
 }
-
-export default App;
